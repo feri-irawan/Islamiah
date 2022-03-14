@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+strong {
+  @apply text-rose-400;
+}
+
+@font-face {
+  font-family: Quran;
+  src: url('/LPMQ\ IsepMisbah.ttf');
+}
+
+.font-mushaf {
+  font-family: Quran;
+}
+
+audio::-webkit-media-controls-panel {
+  @apply bg-rose-50;
+}
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+  @apply text-rose-500;
+}

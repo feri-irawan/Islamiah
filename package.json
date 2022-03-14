@@ -1,0 +1,27 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-google-maps": "^9.4.5"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.4",
+    "tailwindcss": "^3.0.0"
+  },
+  "keywords": [
+    "Jadwal Sholat",
+    "Al-Qur'an",
+    "Ramadhan",
+    "Islamiah"
+  ],
+  "name": "islamiah",
+  "description": "Aplikasi web yang berisi qur'an online, informasi jadwal sholat, kalender, berita islam dan lainnya."
+}
