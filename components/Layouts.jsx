@@ -11,6 +11,13 @@ export default function Layout({children, name}) {
       <Head>
         <title>{name}</title>
         <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="preload"
+          href="/fonts/Mushaf.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin=""
+        />
       </Head>
       <main className="text-slate-600">
         <Header />

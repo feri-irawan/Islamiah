@@ -7,12 +7,38 @@ strong {
 }
 
 @font-face {
-  font-family: Quran;
-  src: url('/LPMQ\ IsepMisbah.ttf');
+  font-family: Mushaf;
+  src: url('/fonts/mushaf.ttf');
 }
 
 .font-mushaf {
-  font-family: Quran;
+  font-family: Mushaf;
+}
+
+.verse-number {
+  filter: drop-shadow(0px 0px 1px rgb(251 113 133));
+}
+.verse-number > * {
+  @apply py-2 text-center w-10 bg-rose-200;
+  white-space: nowrap;
+  clip-path: polygon(
+    50% 0,
+    65% 15%,
+    85% 15%,
+    85% 35%,
+    100% 50%,
+    85% 65%,
+    85% 85%,
+    65% 85%,
+    50% 100%,
+    35% 85%,
+    15% 85%,
+    15% 65%,
+    0 50%,
+    15% 35%,
+    15% 15%,
+    35% 15%
+  );
 }
 
 audio::-webkit-media-controls-panel {

@@ -21,7 +21,7 @@ export default function Kalender() {
     })
 
     setLoading(true)
-    fetch(`http://api.aladhan.com/v1/calendar?${query}`)
+    fetch(`https://api.aladhan.com/v1/calendar?${query}`)
       .then((res) => res.json())
       .then(({data}) => {
         setCalendar(data)
@@ -54,7 +54,7 @@ export default function Kalender() {
       )}
 
       {calendar && (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto mx-auto max-w-max">
           <table className="table-fixed">
             <thead>
               <tr className="divide-x text-rose-500">

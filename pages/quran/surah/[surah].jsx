@@ -69,7 +69,7 @@ export default function Surah() {
             </div>
 
             {/* Options */}
-            <div className="flex justify-center mt-3">
+            <div className="flex flex-wrap justify-center mt-3 text-sm">
               {/* Tafsir button */}
               <div
                 className={`cursor-pointer duration-300 hover:text-rose-500 ${
@@ -182,7 +182,7 @@ export default function Surah() {
             </div>
 
             {/* Navigation */}
-            <div className="flex justify-between mt-3">
+            <div className="flex flex-wrap justify-between mt-3">
               {/* Previous */}
               <div className="flex items-center hover:text-rose-500 duration-300">
                 {surah.number > 1 && (
@@ -235,8 +235,9 @@ export default function Surah() {
           </div>
 
           {/* Verses */}
-          {surah.verses.map((verse) => (
+          {surah.verses.map((verse, i) => (
             <VerseCard
+              key={i}
               options={{
                 displayTafsir,
                 displayLatin,

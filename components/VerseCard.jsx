@@ -9,7 +9,7 @@ export default function VerseCard({verse, options}) {
 
   return (
     <div className="flex mb-4">
-      <div className="font-bold text-rose-500 mr-3">
+      <div className="verse-number font-bold text-rose-500 mr-3">
         <div className="sticky top-3 bg-rose-200 px-3 py-1.5 rounded-full">
           {number.inSurah}
         </div>
@@ -29,11 +29,16 @@ export default function VerseCard({verse, options}) {
         {/* Translate */}
         {displayTranslate && <p className="block mt-2">{translation.id}</p>}
 
-        <div className="mt-3 flex items-center">
+        <div className="mt-3 flex flex-wrap items-center">
           {/* Audio */}
           {displayAudio && (
-            <div className="overflow-hidden flex justify-center items-center h-5 max-w-full mr-3">
-              <audio src={audio.primary} preload="none" controls={true} />
+            <div className="overflow-hidden flex justify-center items-center h-5 mr-3 w-full">
+              <audio
+                className="w-full"
+                src={audio.primary}
+                preload="none"
+                controls={true}
+              />
             </div>
           )}
         </div>
