@@ -9,7 +9,7 @@ export default function Layout({children, name}) {
   return (
     <div className="w-full mx-auto">
       <Head>
-        <title>{name}</title>
+        <title>Islamiah - {name}</title>
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="preload"
