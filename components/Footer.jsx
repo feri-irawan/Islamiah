@@ -7,7 +7,7 @@ export default function Footer() {
           <a href="https://feri-irawan.netlify.app" target="_blank">
             Feri Irawan
           </a>{' '}
-          untuk Sweet heartnya
+          {/* untuk Sweet heartnya */}
         </p>
       </footer>
     </>
