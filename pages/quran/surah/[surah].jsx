@@ -36,9 +36,6 @@ export default function Surah() {
         })
   }, [surahNumber])
 
-  console.log('Surah', surah)
-  console.log('Surah Number', surahNumber)
-
   return (
     <Layout
       name={
