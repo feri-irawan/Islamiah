@@ -3,6 +3,8 @@ import ErrorCard from '../components/ErrorCards'
 import JadwalSholatCard from '../components/JadwalSholatCard'
 import Layout from '../components/Layouts'
 import Loading from '../components/Loading'
+import Tracker from '../components/Tracker'
+import {coords} from '../constants/location'
 import {indonesianDate, indonesianName} from '../utils/jadwal-sholat'
 
 export default function JadwalSolatHariIni() {
@@ -16,6 +18,9 @@ export default function JadwalSolatHariIni() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
+  const [coordinates, setCoordinates] = useState(coords)
+  const [displayMap, setDisplayMap] = useState(false)
+
   const [today, setToday] = useState(Number(dd))
   const [tanggal, setTanggal] = useState(indonesianDate())
   const [jam, setJam] = useState(indonesianDate(true))
@@ -25,8 +30,7 @@ export default function JadwalSolatHariIni() {
   useEffect(() => {
     // Query string
     const query = new URLSearchParams({
-      latitude: -5.432785335037951,
-      longitude: 120.20395726642634,
+      ...coordinates,
       method: 15,
     })
     const apiURL = `https://api.aladhan.com/v1/timings/${today}-${mm}-${yyyy}?${query}`
@@ -43,7 +47,7 @@ export default function JadwalSolatHariIni() {
         setLoading(false)
         setError(true)
       })
-  }, [today])
+  }, [today, coordinates])
 
   // Mengatur waktu tanggal, jam, hari ini.
   setInterval(() => {
@@ -117,11 +121,37 @@ export default function JadwalSolatHariIni() {
         <ErrorCard message="Gagal memuat data, silakan periksa koneksi internet Anda lalu refresh halaman ini." />
       )}
 
+      <div
+        className={`fixed inset-0 p-3 bg-white duration-300 ${
+          displayMap ? 'visible' : 'invisible'
+        }`}
+      >
+        <h2 className="text-lg font-bold text-rose-500">Atur Lokasi</h2>
+        <p>Silakan klik lokasi pada map untuk mengganti lokasi.</p>
+
+        <Tracker callback={(coords) => setCoordinates(coords)} />
+
+        <button
+          onClick={() => setDisplayMap(!displayMap)}
+          className="px-3 py-2 rounded-lg bg-rose-500 text-rose-50"
+        >
+          Simpan
+        </button>
+      </div>
+
       {jadwalSholat && (
         <>
           {jadwalSholat.date && (
             <>
               <p>Berikut jadwal sholat hari ini.</p>
+              <button
+                onClick={() => setDisplayMap(!displayMap)}
+                className="px-3 py-2 mt-3 rounded-lg bg-rose-500 text-rose-50"
+                title="Klik untuk mengatur lokasi sesuai keinginan"
+              >
+                Atur lokasi
+              </button>
+
               <div className="grid grid-cols-2">
                 <p className="flex items-center mt-3">
                   <svg

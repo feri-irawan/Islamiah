@@ -1,36 +1,52 @@
 import {useEffect} from 'react'
-import {GoogleMap, withScriptjs, withGoogleMap} from 'react-google-maps'
-
-function Map() {
-  return (
-    <GoogleMap
-      defaultZoom={16}
-      defaultCenter={{lat: -5.432785335037951, lng: 120.20395726642634}}
-    />
-  )
-}
-
-const WrappedMap = withScriptjs(withGoogleMap(Map))
 
 export default function GoogleMapTraker() {
   return (
     <>
-      <div style={{width: '100%', height: '100%'}}>
-        <WrappedMap
-          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDcwGyRxRbcNGWOFQVT87A1mkxEOfm8t0w"
-          loadingElement={<div style={{height: `100%`}} />}
-          containerElement={<div style={{height: `400px`}} />}
-          mapElement={<div style={{height: `100%`}} />}
-        />
-      </div>
+      <div className="w-full h-96" id="googleMapTracker"></div>
 
-      {/* <div id="googleMapTraker"></div>
-
-      <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=default" />
       <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcwGyRxRbcNGWOFQVT87A1mkxEOfm8t0w&callback=initMap&v=weekly"
-        async
-      ></script> */}
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0LmU81faX1ib1pV391OjdHX8RZG7xwPs&callback=initMap&v=weekly"
+        async={true}
+      />
+
+      <script
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+      function initMap() {
+        const myLatlng = { lat: -25.363, lng: 131.044 };
+        const map = new google.maps.Map(document.getElementById("googleMapTracker"), {
+          zoom: 4,
+          center: myLatlng,
+        });
+        // Create the initial InfoWindow.
+        let infoWindow = new google.maps.InfoWindow({
+          content: "Click the map to get Lat/Lng!",
+          position: myLatlng,
+        });
+      
+        infoWindow.open(map);
+        // Configure the click listener.
+        map.addListener("click", (mapsMouseEvent) => {
+          // Close the current InfoWindow.
+          infoWindow.close();
+          // Create a new InfoWindow.
+          infoWindow = new google.maps.InfoWindow({
+            position: mapsMouseEvent.latLng,
+          });
+          infoWindow.setContent(
+            JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+          );
+          infoWindow.open(map);
+        });
+      }
+      
+      initMap()
+      `,
+        }}
+      />
     </>
   )
 }
