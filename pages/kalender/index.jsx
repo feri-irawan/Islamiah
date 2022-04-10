@@ -2,23 +2,43 @@ import {useEffect, useState} from 'react'
 import ErrorCard from '../../components/ErrorCards'
 import Layout from '../../components/Layouts'
 import Loading from '../../components/Loading'
+import {coords} from '../../constants/location'
 import {indonesianDate} from '../../utils/jadwal-sholat'
 
 export default function Kalender() {
+  const [coordinates, setCoordinates] = useState({
+    latitude: coords.lat,
+    longitude: coords.lng,
+  })
   const [calendar, setCalendar] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+
+  const [local, setLocal] = useState(true)
 
   const d = new Date()
 
   // Fetch data
   useEffect(() => {
+    if (localStorage.getItem('coords')) {
+      setLocal(!local)
+
+      if (local) {
+        const {lat, lng} = JSON.parse(localStorage.getItem('coords'))
+        setCoordinates({
+          latitude: lat,
+          longitude: lng,
+        })
+      }
+    }
+
     // Query string
     const query = new URLSearchParams({
-      latitude: -5.432785335037951,
-      longitude: 120.20395726642634,
+      ...coordinates,
       method: 15,
     })
+
+    console.log(`${query}`)
 
     setLoading(true)
     fetch(`https://api.aladhan.com/v1/calendar?${query}`)
@@ -31,7 +51,7 @@ export default function Kalender() {
         setLoading(false)
         setError(true)
       })
-  }, [])
+  }, [coordinates])
 
   return (
     <Layout name="Kalender">

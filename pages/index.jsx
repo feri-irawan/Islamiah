@@ -18,7 +18,11 @@ export default function JadwalSolatHariIni() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
-  const [coordinates, setCoordinates] = useState(coords)
+  const [coordinates, setCoordinates] = useState({
+    latitude: coords.lat,
+    longitude: coords.lng,
+  })
+
   const [displayMap, setDisplayMap] = useState(false)
 
   const [today, setToday] = useState(Number(dd))

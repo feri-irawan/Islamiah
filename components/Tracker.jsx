@@ -7,8 +7,8 @@ export default function Tracker({callback}) {
   const autoTrackButton = useRef(null)
   const [coordinates, setCoordinates] = useState({
     default: true,
-    lat: coords.latitude,
-    lng: coords.longitude,
+    lat: coords.lat,
+    lng: coords.lng,
   })
 
   useEffect(() => {
@@ -69,7 +69,11 @@ export default function Tracker({callback}) {
       map.addListener('click', (e) => {
         const {lat, lng} = e.latLng
         setCoordinates({default: false, lat: lat(), lng: lng()})
-        console.log(coordinates)
+
+        localStorage.setItem(
+          'coords',
+          JSON.stringify({default: false, lat: lat(), lng: lng()})
+        )
       })
     })
   }, [coordinates])
@@ -78,6 +82,11 @@ export default function Tracker({callback}) {
   const getCoordinates = (position) => {
     const {latitude, longitude} = position.coords
     setCoordinates({default: false, lat: latitude, lng: longitude})
+
+    localStorage.setItem(
+      'coords',
+      JSON.stringify({default: false, lat: latitude, lng: longitude})
+    )
   }
 
   return (
