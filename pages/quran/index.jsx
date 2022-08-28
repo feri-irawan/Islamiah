@@ -11,7 +11,7 @@ export default function Quran() {
 
   useEffect(() => {
     setLoading(true)
-    fetch('https://api.quran.sutanlab.id/surah')
+    fetch('https://api.quran.gading.dev/surah')
       .then((res) => res.json())
       .then(({data}) => {
         setListSurah(data)
