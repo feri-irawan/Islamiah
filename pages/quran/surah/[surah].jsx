@@ -22,7 +22,7 @@ export default function Surah() {
   useEffect(() => {
     setLoading(true)
     if (surahNumber)
-      fetch(`https://api.quran.sutanlab.id/surah/${surahNumber}`)
+      fetch(`https://api.quran.gading.dev/surah/${surahNumber}`)
         .then((res) => res.json())
         .then(({data}) => {
           setSurah(data)
