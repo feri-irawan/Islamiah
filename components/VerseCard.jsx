@@ -1,8 +1,8 @@
-import {useState} from 'react'
+import { useState } from "react";
 
-export default function VerseCard({verse, options}) {
-  const {number, meta, text, translation, audio, tafsir} = verse
-  const {displayLatin, displayAudio, displayTranslate} = options
+export default function VerseCard({ verse, options }) {
+  const { number, meta, text, translation, audio, tafsir } = verse;
+  const { displayLatin, displayAudio, displayTranslate } = options;
 
   // Jika tafsir masing masing ayat ingin ditambahkan
   // const [displayTafsirVerse, setDisplayTafsirVerse] = useState(false)
@@ -10,7 +10,7 @@ export default function VerseCard({verse, options}) {
   return (
     <div className="flex mb-4">
       <div className="verse-number font-bold text-rose-500 mr-3">
-        <div className="sticky top-3 bg-rose-200 px-3 py-1.5 rounded-full">
+        <div className="sticky top-14 bg-rose-200 px-3 py-1.5 rounded-full">
           {number.inSurah}
         </div>
       </div>
@@ -48,5 +48,5 @@ export default function VerseCard({verse, options}) {
         {/* {displayTafsirVerse && <p className="mt-3">{tafsir.id.long}</p>} */}
       </div>
     </div>
-  )
+  );
 }

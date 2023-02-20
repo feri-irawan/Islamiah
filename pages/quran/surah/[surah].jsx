@@ -79,184 +79,183 @@ export default function Surah({ data }) {
       {surah && (
         <>
           {/* Head */}
-          <div className="mb-3">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold font-serif mb-3">
-                <span className="font-mushaf">{surah.name.short}</span>
-              </h1>
-              <h2 className="text-xl font-bold text-rose-500">
-                {surah.name.transliteration.id}{" "}
-              </h2>
-              <h3 className="text-lg font-semibold">
-                {surah.name.translation.id}
-              </h3>
+
+          <div className="text-center">
+            <h1 className="text-2xl font-bold font-serif mb-3">
+              <span className="font-mushaf">{surah.name.short}</span>
+            </h1>
+            <h2 className="text-xl font-bold text-rose-500">
+              {surah.name.transliteration.id}{" "}
+            </h2>
+            <h3 className="text-lg font-semibold">
+              {surah.name.translation.id}
+            </h3>
+          </div>
+
+          {/* Options */}
+          <div className="flex flex-wrap justify-center py-4 bg-white text-sm sticky top-0 z-10">
+            {/* Tafsir button */}
+            <div
+              className={`cursor-pointer duration-300 hover:text-rose-500 ${
+                displayTafsir ? "text-rose-500" : "text-slate-500 "
+              }`}
+              onClick={() => {
+                setState({ displayTafsir: !displayTafsir });
+              }}
+              title="Klik untuk menampilkan tafsir surah ini."
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 mr-1 inline-block"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+                title="Lihat Tafsir"
+                onClick={() => setState({ displayTafsir: true })}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              Tafsir
             </div>
 
-            {/* Options */}
-            <div className="flex flex-wrap justify-center mt-3 text-sm">
-              {/* Tafsir button */}
-              <div
-                className={`cursor-pointer duration-300 hover:text-rose-500 ${
-                  displayTafsir ? "text-rose-500" : "text-slate-500 "
-                }`}
-                onClick={() => {
-                  setState({ displayTafsir: !displayTafsir });
-                }}
-                title="Klik untuk menampilkan tafsir surah ini."
+            {/* Translate button */}
+            <div
+              className={`cursor-pointer duration-300 hover:text-rose-500 ${
+                displayTranslate ? "text-rose-500" : "text-slate-500 "
+              }`}
+              onClick={() => {
+                setState({ displayTranslate: !displayTranslate });
+              }}
+              title="Klik untuk menampilkan terjemahan masing-masing ayat."
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 ml-2 inline-block"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 mr-1 inline-block"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  title="Lihat Tafsir"
-                  onClick={() => setState({ displayTafsir: true })}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                Tafsir
-              </div>
-
-              {/* Translate button */}
-              <div
-                className={`cursor-pointer duration-300 hover:text-rose-500 ${
-                  displayTranslate ? "text-rose-500" : "text-slate-500 "
-                }`}
-                onClick={() => {
-                  setState({ displayTranslate: !displayTranslate });
-                }}
-                title="Klik untuk menampilkan terjemahan masing-masing ayat."
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 ml-2 inline-block"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
-                  />
-                </svg>{" "}
-                Terjemahan
-              </div>
-
-              {/* Audio button */}
-              <div
-                className={`cursor-pointer duration-300 hover:text-rose-500 ${
-                  displayAudio ? "text-rose-500" : "text-slate-500 "
-                }`}
-                onClick={() => {
-                  setState({ displayAudio: !displayAudio });
-                }}
-                title="Klik untuk menampilkan audio masing-masing ayat."
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 ml-2 inline-block"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
-                  />
-                </svg>{" "}
-                Audio
-              </div>
-
-              {/* Latin button */}
-              <div
-                className={`cursor-pointer duration-300 hover:text-rose-500 ${
-                  displayLatin ? "text-rose-500" : "text-slate-500 "
-                }`}
-                onClick={() => {
-                  setState({ displayLatin: !displayLatin });
-                }}
-                title="Klik untuk menampilkan bacaan latin masing-masing ayat."
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 ml-2 inline-block"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
-                  />
-                </svg>{" "}
-                Latin
-              </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
+                />
+              </svg>{" "}
+              Terjemahan
             </div>
 
-            {/* Navigation */}
-            <div className="flex flex-wrap justify-between mt-3">
-              {/* Previous */}
-              <div className="flex items-center hover:text-rose-500 duration-300">
-                {surah.number > 1 && (
-                  <button
-                    title="Kembali ke surah sebelumnya."
-                    onClick={() => changeSurah(surah.number - 1)}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 inline-block mr-1"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>{" "}
-                    Sebelumnya
-                  </button>
-                )}
-              </div>
+            {/* Audio button */}
+            <div
+              className={`cursor-pointer duration-300 hover:text-rose-500 ${
+                displayAudio ? "text-rose-500" : "text-slate-500 "
+              }`}
+              onClick={() => {
+                setState({ displayAudio: !displayAudio });
+              }}
+              title="Klik untuk menampilkan audio masing-masing ayat."
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 ml-2 inline-block"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                />
+              </svg>{" "}
+              Audio
+            </div>
 
-              {/* Next */}
-              <div className="flex items-center text-right hover:text-rose-500 duration-300">
+            {/* Latin button */}
+            <div
+              className={`cursor-pointer duration-300 hover:text-rose-500 ${
+                displayLatin ? "text-rose-500" : "text-slate-500 "
+              }`}
+              onClick={() => {
+                setState({ displayLatin: !displayLatin });
+              }}
+              title="Klik untuk menampilkan bacaan latin masing-masing ayat."
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 ml-2 inline-block"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
+                />
+              </svg>{" "}
+              Latin
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <div className="flex flex-wrap justify-between mb-5">
+            {/* Previous */}
+            <div className="flex items-center hover:text-rose-500 duration-300">
+              {surah.number > 1 && (
                 <button
-                  title="Beralih ke surah selanjutnya."
-                  onClick={() => changeSurah(surah.number + 1)}
+                  title="Kembali ke surah sebelumnya."
+                  onClick={() => changeSurah(surah.number - 1)}
                 >
-                  Selanjutnya{" "}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 inline-block ml-1"
+                    className="h-5 w-5 inline-block mr-1"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
                     <path
                       fillRule="evenodd"
-                      d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                      d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
                       clipRule="evenodd"
                     />
-                    <path
-                      fillRule="evenodd"
-                      d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  </svg>{" "}
+                  Sebelumnya
                 </button>
-              </div>
+              )}
+            </div>
+
+            {/* Next */}
+            <div className="flex items-center text-right hover:text-rose-500 duration-300">
+              <button
+                title="Beralih ke surah selanjutnya."
+                onClick={() => changeSurah(surah.number + 1)}
+              >
+                Selanjutnya{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 inline-block ml-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                    clipRule="evenodd"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
 
