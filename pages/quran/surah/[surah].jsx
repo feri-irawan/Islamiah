@@ -1,48 +1,75 @@
-import Link from 'next/link'
-import {useRouter} from 'next/router'
-import {useEffect, useState} from 'react'
-import ErrorCard from '../../../components/ErrorCards'
-import Layout from '../../../components/Layouts'
-import Loading from '../../../components/Loading'
-import VerseCard from '../../../components/VerseCard'
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { create } from "zustand";
+import ErrorCard from "../../../components/ErrorCards";
+import Layout from "../../../components/Layouts";
+import Loading from "../../../components/Loading";
+import VerseCard from "../../../components/VerseCard";
 
-export default function Surah() {
-  const router = useRouter()
-  const surahNumber = router.query.surah
+const surahEnpoint = "https://api.quran.gading.dev/surah/";
 
-  const [surah, setSurah] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+// States
+const useSurah = create((set) => ({
+  // Initial states
+  surah: null,
+  loading: false,
+  error: false,
+  displayTafsir: false,
+  displayLatin: false,
+  displayAudio: false,
+  displayTranslate: false,
 
-  const [displayTafsir, setDisplayTafsir] = useState(false)
-  const [displayLatin, setDisplayLatin] = useState(false)
-  const [displayAudio, setDisplayAudio] = useState(false)
-  const [displayTranslate, setDisplayTranslate] = useState(false)
+  // Set states
+  setState: (newState) => set((states) => ({ ...states, ...newState })),
 
+  // Mendapatkan data surah
+  getSurah: async (number) => {
+    set({ loading: true });
+    await fetch(surahEnpoint + number)
+      .then((res) => res.json())
+      .then(({ data }) => {
+        console.log("Berhasil memuat data");
+        set({ surah: data });
+      })
+      .catch(() => {
+        console.log("Gagal memuat data");
+        set({ error: true });
+      });
+    set({ loading: false });
+  },
+}));
+
+export default function Surah({ data }) {
+  const router = useRouter();
+  const surahNumber = router.query.surah;
+
+  const {
+    surah,
+    loading,
+    error,
+    displayTafsir,
+    displayLatin,
+    displayAudio,
+    displayTranslate,
+    setState,
+    getSurah,
+  } = useSurah();
+
+  // On page loaded
   useEffect(() => {
-    setLoading(true)
-    if (surahNumber)
-      fetch(`https://api.quran.gading.dev/surah/${surahNumber}`)
-        .then((res) => res.json())
-        .then(({data}) => {
-          setSurah(data)
-          setLoading(false)
-          console.log('Berhasil memuat data')
-        })
-        .catch(() => {
-          console.log('Gagal memuat data')
-          setLoading(false)
-          setError(true)
-        })
-  }, [surahNumber])
+    setState({ surah: data });
+  }, []);
+
+  // Mengganti surah
+  const changeSurah = (number) => {
+    router.push("/quran/surah/" + number);
+    getSurah(number);
+  };
 
   return (
     <Layout
-      name={
-        surah
-          ? `Qur'an Surah ke-${surah.number} - ${surah.name.transliteration.id} (${surah.name.translation.id})`
-          : `Qur'an surah ke-${surahNumber}`
-      }
+      name={`Qur'an Surah ke-${data.number} - ${data.name.transliteration.id} (${data.name.translation.id})`}
     >
       {loading && <Loading message="Memuat semua ayat..." />}
       {error && (
@@ -58,7 +85,7 @@ export default function Surah() {
                 <span className="font-mushaf">{surah.name.short}</span>
               </h1>
               <h2 className="text-xl font-bold text-rose-500">
-                {surah.name.transliteration.id}{' '}
+                {surah.name.transliteration.id}{" "}
               </h2>
               <h3 className="text-lg font-semibold">
                 {surah.name.translation.id}
@@ -70,10 +97,10 @@ export default function Surah() {
               {/* Tafsir button */}
               <div
                 className={`cursor-pointer duration-300 hover:text-rose-500 ${
-                  displayTafsir ? 'text-rose-500' : 'text-slate-500 '
+                  displayTafsir ? "text-rose-500" : "text-slate-500 "
                 }`}
                 onClick={() => {
-                  setDisplayTafsir(!displayTafsir)
+                  setState({ displayTafsir: !displayTafsir });
                 }}
                 title="Klik untuk menampilkan tafsir surah ini."
               >
@@ -85,7 +112,7 @@ export default function Surah() {
                   stroke="currentColor"
                   strokeWidth="2"
                   title="Lihat Tafsir"
-                  onClick={() => setDisplayTafsir(true)}
+                  onClick={() => setState({ displayTafsir: true })}
                 >
                   <path
                     strokeLinecap="round"
@@ -99,10 +126,10 @@ export default function Surah() {
               {/* Translate button */}
               <div
                 className={`cursor-pointer duration-300 hover:text-rose-500 ${
-                  displayTranslate ? 'text-rose-500' : 'text-slate-500 '
+                  displayTranslate ? "text-rose-500" : "text-slate-500 "
                 }`}
                 onClick={() => {
-                  setDisplayTranslate(!displayTranslate)
+                  setState({ displayTranslate: !displayTranslate });
                 }}
                 title="Klik untuk menampilkan terjemahan masing-masing ayat."
               >
@@ -119,17 +146,17 @@ export default function Surah() {
                     strokeLinejoin="round"
                     d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
                   />
-                </svg>{' '}
+                </svg>{" "}
                 Terjemahan
               </div>
 
               {/* Audio button */}
               <div
                 className={`cursor-pointer duration-300 hover:text-rose-500 ${
-                  displayAudio ? 'text-rose-500' : 'text-slate-500 '
+                  displayAudio ? "text-rose-500" : "text-slate-500 "
                 }`}
                 onClick={() => {
-                  setDisplayAudio(!displayAudio)
+                  setState({ displayAudio: !displayAudio });
                 }}
                 title="Klik untuk menampilkan audio masing-masing ayat."
               >
@@ -146,17 +173,17 @@ export default function Surah() {
                     strokeLinejoin="round"
                     d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
                   />
-                </svg>{' '}
+                </svg>{" "}
                 Audio
               </div>
 
               {/* Latin button */}
               <div
                 className={`cursor-pointer duration-300 hover:text-rose-500 ${
-                  displayLatin ? 'text-rose-500' : 'text-slate-500 '
+                  displayLatin ? "text-rose-500" : "text-slate-500 "
                 }`}
                 onClick={() => {
-                  setDisplayLatin(!displayLatin)
+                  setState({ displayLatin: !displayLatin });
                 }}
                 title="Klik untuk menampilkan bacaan latin masing-masing ayat."
               >
@@ -173,7 +200,7 @@ export default function Surah() {
                     strokeLinejoin="round"
                     d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
                   />
-                </svg>{' '}
+                </svg>{" "}
                 Latin
               </div>
             </div>
@@ -183,50 +210,52 @@ export default function Surah() {
               {/* Previous */}
               <div className="flex items-center hover:text-rose-500 duration-300">
                 {surah.number > 1 && (
-                  <Link href={`/quran/surah/${surah.number - 1}`}>
-                    <a title="Kembali ke surah sebelumnya.">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 inline-block mr-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>{' '}
-                      Sebelumnya
-                    </a>
-                  </Link>
-                )}
-              </div>
-
-              {/* Next */}
-              <div className="flex items-center text-right hover:text-rose-500 duration-300">
-                <Link href={`/quran/surah/${surah.number + 1}`}>
-                  <a title="Beralih ke surah selanjutnya.">
-                    Selanjutnya{' '}
+                  <button
+                    title="Kembali ke surah sebelumnya."
+                    onClick={() => changeSurah(surah.number - 1)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 inline-block ml-1"
+                      className="h-5 w-5 inline-block mr-1"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
                       <path
                         fillRule="evenodd"
-                        d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                        d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
                         clipRule="evenodd"
                       />
-                      <path
-                        fillRule="evenodd"
-                        d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </a>
-                </Link>
+                    </svg>{" "}
+                    Sebelumnya
+                  </button>
+                )}
+              </div>
+
+              {/* Next */}
+              <div className="flex items-center text-right hover:text-rose-500 duration-300">
+                <button
+                  title="Beralih ke surah selanjutnya."
+                  onClick={() => changeSurah(surah.number + 1)}
+                >
+                  Selanjutnya{" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 inline-block ml-1"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                      clipRule="evenodd"
+                    />
+                    <path
+                      fillRule="evenodd"
+                      d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
@@ -250,57 +279,59 @@ export default function Surah() {
             {/* Previous */}
             <div className="flex items-center hover:text-rose-500 duration-300">
               {surah.number > 1 && (
-                <Link href={`/quran/surah/${surah.number - 1}`}>
-                  <a title="Kembali ke surah sebelumnya.">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 inline-block mr-1"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>{' '}
-                    Sebelumnya
-                  </a>
-                </Link>
-              )}
-            </div>
-
-            {/* Next */}
-            <div className="flex items-center text-right hover:text-rose-500 duration-300">
-              <Link href={`/quran/surah/${surah.number + 1}`}>
-                <a title="Beralih ke surah selanjutnya.">
-                  Selanjutnya{' '}
+                <button
+                  title="Kembali ke surah sebelumnya."
+                  onClick={() => changeSurah(surah.number - 1)}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 inline-block ml-1"
+                    className="h-5 w-5 inline-block mr-1"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
                     <path
                       fillRule="evenodd"
-                      d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                      d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
                       clipRule="evenodd"
                     />
-                    <path
-                      fillRule="evenodd"
-                      d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </a>
-              </Link>
+                  </svg>{" "}
+                  Sebelumnya
+                </button>
+              )}
+            </div>
+
+            {/* Next */}
+            <div className="flex items-center text-right hover:text-rose-500 duration-300">
+              <button
+                title="Beralih ke surah selanjutnya."
+                onClick={() => changeSurah(surah.number + 1)}
+              >
+                Selanjutnya{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 inline-block ml-1"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                    clipRule="evenodd"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
 
           {/* Tafsir */}
           <div
             className={`fixed inset-0 z-10 flex justify-center p-4 bg-slate-700/20 backdrop-blur duration-300 overflow-y-auto ${
-              displayTafsir ? 'visible opacity-100' : 'invisible opacity-0'
+              displayTafsir ? "visible opacity-100" : "invisible opacity-0"
             }`}
           >
             <div>
@@ -314,7 +345,7 @@ export default function Surah() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     strokeWidth="2"
-                    onClick={() => setDisplayTafsir(false)}
+                    onClick={() => setState({ displayTafsir: false })}
                   >
                     <path
                       strokeLinecap="round"
@@ -350,8 +381,8 @@ export default function Surah() {
               <div className="p-3 rounded-b-lg bg-white">
                 <p className="mb-3">
                   <strong>
-                    Qur'an surah ke-{surah.number}, terdiri dari{' '}
-                    {surah.numberOfVerses} ayat dan termasuk surah{' '}
+                    Qur'an surah ke-{surah.number}, terdiri dari{" "}
+                    {surah.numberOfVerses} ayat dan termasuk surah{" "}
                     {surah.revelation.id}.
                   </strong>
                 </p>
@@ -362,5 +393,24 @@ export default function Surah() {
         </>
       )}
     </Layout>
-  )
+  );
+}
+
+/** @type {import("next").GetServerSideProps} */
+export async function getServerSideProps({ params }) {
+  const surahNumber = Number(params.surah);
+
+  // Handel surah number
+  if (surahNumber < 1 || surahNumber > 114) return { notFound: true };
+
+  // Mendapatkan data surah
+  const data = await fetch(surahEnpoint + surahNumber)
+    .then((res) => res.json())
+    .then(({ data }) => data);
+
+  return {
+    props: {
+      data,
+    },
+  };
 }
