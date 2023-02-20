@@ -63,6 +63,7 @@ export default function Surah({ data }) {
 
   // Mengganti surah
   const changeSurah = (number) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     router.push("/quran/surah/" + number);
     getSurah(number);
   };
