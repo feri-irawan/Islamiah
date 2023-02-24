@@ -1,30 +1,28 @@
-import {useEffect, useState} from 'react'
-import BeritaCard from '../../components/BeritaCard'
-import ErrorCard from '../../components/ErrorCards'
-import Layout from '../../components/Layouts'
-import Loading from '../../components/Loading'
+import { useEffect, useState } from "react";
+import BeritaCard from "../../components/BeritaCard";
+import ErrorCard from "../../components/ErrorCards";
+import Layout from "../../components/Layouts";
+import Loading from "../../components/Loading";
 
 export default function Berita() {
-  const [berita, setBerita] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-
-  const d = new Date()
+  const [berita, setBerita] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   // Fetch data
   useEffect(() => {
-    setLoading(true)
-    fetch('https://api-berita-indonesia.vercel.app/republika/islam/')
+    setLoading(true);
+    fetch("https://api-berita-indonesia.vercel.app/republika/islam/")
       .then((res) => res.json())
-      .then(({data}) => {
-        setBerita(data.posts)
-        setLoading(false)
+      .then(({ data }) => {
+        setBerita(data.posts);
+        setLoading(false);
       })
       .catch(() => {
-        setLoading(false)
-        setError(true)
-      })
-  }, [])
+        setLoading(false);
+        setError(true);
+      });
+  }, []);
 
   return (
     <Layout name="Berita">
@@ -45,5 +43,5 @@ export default function Berita() {
         </div>
       )}
     </Layout>
-  )
+  );
 }

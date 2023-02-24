@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { create } from "zustand";
@@ -42,7 +41,6 @@ const useSurah = create((set) => ({
 
 export default function Surah({ data }) {
   const router = useRouter();
-  const surahNumber = router.query.surah;
 
   const {
     surah,

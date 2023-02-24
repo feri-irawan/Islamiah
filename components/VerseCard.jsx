@@ -4,7 +4,7 @@ import { useState } from "react";
 export default function VerseCard({ verse, options }) {
   const [copied, setCopied] = useState(false);
 
-  const { number, meta, text, translation, audio, tafsir } = verse;
+  const { number, text, translation, audio } = verse;
   const { displayLatin, displayAudio, displayTranslate } = options;
 
   // Jika tafsir masing masing ayat ingin ditambahkan
