@@ -56,9 +56,18 @@ export default function Surah({ data }) {
     getSurah,
   } = useSurah();
 
+  const goToVerse = () => {
+    const a = document.createElement("a");
+    a.href = window.location.hash;
+    a.click();
+  };
+
   // On page loaded
   useEffect(() => {
     setState({ surah: data });
+
+    // Go to the verse
+    if (window.location.hash) goToVerse();
   }, []);
 
   // Mengganti surah
@@ -392,6 +401,8 @@ export default function Surah({ data }) {
           </div>
         </>
       )}
+
+      {}
     </Layout>
   );
 }

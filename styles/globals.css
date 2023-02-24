@@ -2,17 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 strong {
   @apply text-rose-400;
 }
 
 @font-face {
   font-family: Mushaf;
-  src: url('/fonts/mushaf.ttf');
+  src: url("/fonts/mushaf.ttf");
 }
 
 .font-mushaf {
   font-family: Mushaf;
+}
+
+:target {
+  animation: highlightVerse 5s;
+}
+
+@keyframes highlightVerse {
+  0% {
+    @apply text-rose-500;
+  }
+  90% {
+    @apply text-rose-500;
+  }
+  100% {
+    @apply text-current;
+  }
 }
 
 .verse-number {

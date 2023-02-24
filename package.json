@@ -8,6 +8,7 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.13.11",
     "caniuse-lite": "^1.0.30001457",
+    "copy-to-clipboard": "^3.3.3",
     "next": "latest",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
