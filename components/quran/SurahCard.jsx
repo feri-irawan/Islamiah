@@ -16,28 +16,26 @@ export default function SurahCard({ surah }) {
         </div>
         <div className="w-full">
           <Link href={`/quran/surah/${number}`}>
-            <a>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center">
-                  <div className="px-3 py-2.5">
-                    <h2 className="text-lg md:text-xl font-bold text-rose-400">
-                      {name.transliteration.id}
-                    </h2>
-                    <h2 className="font-semibold text-sm md:text-base">
-                      {name.translation.id}
-                    </h2>
-                  </div>
-                </div>
-
-                <div className="text-right flex items-center">
-                  <div className="px-3">
-                    <h1 className="text-xl md:text-2xl font-bold font-serif">
-                      <span className="font-mushaf">{name.short}</span>
-                    </h1>
-                  </div>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center">
+                <div className="px-3 py-2.5">
+                  <h2 className="text-lg md:text-xl font-bold text-rose-400">
+                    {name.transliteration.id}
+                  </h2>
+                  <h2 className="font-semibold text-sm md:text-base">
+                    {name.translation.id}
+                  </h2>
                 </div>
               </div>
-            </a>
+
+              <div className="text-right flex items-center">
+                <div className="px-3">
+                  <h1 className="text-xl md:text-2xl font-bold font-serif">
+                    <span className="font-mushaf">{name.short}</span>
+                  </h1>
+                </div>
+              </div>
+            </div>
           </Link>
 
           <div className="text-sm mt-1 flex justify-between px-3 pb-3">

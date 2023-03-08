@@ -1,15 +1,16 @@
 import Head from 'next/head'
-
 import Content from './Content'
 import Header from './Header'
 import Footer from './Footer'
 import BottomNavigation from './BottomNavigation'
 
 export default function Layout({ children, name }) {
+  const title = `Islamiah - ${name}`
+
   return (
     <div className="w-full mx-auto">
       <Head>
-        <title>Islamiah - {name}</title>
+        <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
         <link
           rel="preload"

@@ -4,8 +4,8 @@ export default function Header() {
   return (
     <header className="bg-rose-500 p-3 flex justify-between items-center text-rose-50">
       <div>
-        <Link href="/">
-          <a className="text-lg font-bold">Islamiah</a>
+        <Link href="/" className="text-lg font-bold">
+          Islamiah
         </Link>
       </div>
 
