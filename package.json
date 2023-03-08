@@ -1,4 +1,10 @@
 {
+  "name": "islamiah",
+  "description": "Aplikasi web yang berisi qur'an online, informasi jadwal sholat, kalender, berita islam dan lainnya.",
+  "version": "1.0.0",
+  "repository": "git@github.com:feri-irawan/Islamiah.git",
+  "author": "Feri Irawan <feriirawan.akun@gmail.com>",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -6,25 +12,23 @@
     "start": "next start"
   },
   "dependencies": {
-    "@googlemaps/js-api-loader": "^1.13.11",
-    "caniuse-lite": "^1.0.30001457",
+    "@googlemaps/js-api-loader": "^1.15.1",
+    "caniuse-lite": "^1.0.30001462",
     "copy-to-clipboard": "^3.3.3",
-    "next": "latest",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "zustand": "^4.3.3"
+    "next": "13.2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.3.6"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.0",
-    "postcss": "^8.4.4",
-    "tailwindcss": "^3.0.0"
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.7"
   },
   "keywords": [
     "Jadwal Sholat",
     "Al-Qur'an",
     "Ramadhan",
     "Islamiah"
-  ],
-  "name": "islamiah",
-  "description": "Aplikasi web yang berisi qur'an online, informasi jadwal sholat, kalender, berita islam dan lainnya."
+  ]
 }
