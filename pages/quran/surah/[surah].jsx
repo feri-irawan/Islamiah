@@ -4,7 +4,7 @@ import { create } from "zustand";
 import ErrorCard from "../../../components/ErrorCards";
 import Layout from "../../../components/Layouts";
 import Loading from "../../../components/Loading";
-import VerseCard from "../../../components/VerseCard";
+import VerseCard from "../../../components/quran/VerseCard";
 
 const surahEnpoint = "https://api.quran.gading.dev/surah/";
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import BeritaCard from "../../components/BeritaCard";
+import BeritaCard from "../../components/berita/BeritaCard";
 import ErrorCard from "../../components/ErrorCards";
 import Layout from "../../components/Layouts";
 import Loading from "../../components/Loading";
