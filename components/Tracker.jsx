@@ -1,8 +1,8 @@
-import {Loader} from '@googlemaps/js-api-loader'
-import {useState, useEffect, useRef} from 'react'
-import {coords} from '../constants/location'
+import { Loader } from '@googlemaps/js-api-loader'
+import { useState, useEffect, useRef } from 'react'
+import { coords } from '../constants/location'
 
-export default function Tracker({callback}) {
+export default function Tracker({ callback }) {
   const googleMap = useRef(null)
   const autoTrackButton = useRef(null)
   const [coordinates, setCoordinates] = useState({
@@ -67,12 +67,12 @@ export default function Tracker({callback}) {
 
       // Jika map diklik maka perbarui coordinates
       map.addListener('click', (e) => {
-        const {lat, lng} = e.latLng
-        setCoordinates({default: false, lat: lat(), lng: lng()})
+        const { lat, lng } = e.latLng
+        setCoordinates({ default: false, lat: lat(), lng: lng() })
 
         localStorage.setItem(
           'coords',
-          JSON.stringify({default: false, lat: lat(), lng: lng()})
+          JSON.stringify({ default: false, lat: lat(), lng: lng() })
         )
       })
     })
@@ -80,12 +80,12 @@ export default function Tracker({callback}) {
 
   // Mendapatkan coordinate
   const getCoordinates = (position) => {
-    const {latitude, longitude} = position.coords
-    setCoordinates({default: false, lat: latitude, lng: longitude})
+    const { latitude, longitude } = position.coords
+    setCoordinates({ default: false, lat: latitude, lng: longitude })
 
     localStorage.setItem(
       'coords',
-      JSON.stringify({default: false, lat: latitude, lng: longitude})
+      JSON.stringify({ default: false, lat: latitude, lng: longitude })
     )
   }
 

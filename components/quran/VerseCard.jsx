@@ -1,31 +1,31 @@
-import copy from "copy-to-clipboard";
-import { useState } from "react";
+import copy from 'copy-to-clipboard'
+import { useState } from 'react'
 
 export default function VerseCard({ verse, options }) {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState(false)
 
-  const { number, text, translation, audio } = verse;
-  const { displayLatin, displayAudio, displayTranslate } = options;
+  const { number, text, translation, audio } = verse
+  const { displayLatin, displayAudio, displayTranslate } = options
 
   // Jika tafsir masing masing ayat ingin ditambahkan
   // const [displayTafsirVerse, setDisplayTafsirVerse] = useState(false)
 
   const copyVerseLink = () => {
     const copied = copy(
-      window.location.origin + window.location.pathname + "#" + number.inSurah
-    );
+      window.location.origin + window.location.pathname + '#' + number.inSurah
+    )
 
-    if (copied) setCopied(true);
+    if (copied) setCopied(true)
 
-    setTimeout(() => setCopied(false), 5000);
-  };
+    setTimeout(() => setCopied(false), 5000)
+  }
 
   return (
     <div id={number.inSurah} className="mb-4 -mt-16 pt-16">
       <div
         onDoubleClick={copyVerseLink}
         className={`flex ${
-          copied && "ring ring-offset-4 ring-rose-200 rounded"
+          copied && 'ring ring-offset-4 ring-rose-200 rounded'
         }`}
       >
         <div className="verse-number font-bold text-rose-500 mr-3">
@@ -76,5 +76,5 @@ export default function VerseCard({ verse, options }) {
         </div>
       </div>
     </div>
-  );
+  )
 }

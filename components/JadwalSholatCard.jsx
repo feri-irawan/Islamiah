@@ -1,7 +1,7 @@
 export default function JadwalSholatCard({ sholat }) {
-  const { name, time, active } = sholat;
+  const { name, time, active } = sholat
 
-  const border = active ? "border border-rose-500" : "";
+  const border = active ? 'border border-rose-500' : ''
 
   return (
     <div
@@ -9,7 +9,7 @@ export default function JadwalSholatCard({ sholat }) {
     >
       <div className="text-lg">{name}</div>
       <div className="font-bold flex items-center">
-        {time}{" "}
+        {time}{' '}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -23,5 +23,5 @@ export default function JadwalSholatCard({ sholat }) {
         </svg>
       </div>
     </div>
-  );
+  )
 }

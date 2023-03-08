@@ -5,7 +5,7 @@ import Header from './Header'
 import Footer from './Footer'
 import BottomNavigation from './BottomNavigation'
 
-export default function Layout({children, name}) {
+export default function Layout({ children, name }) {
   return (
     <div className="w-full mx-auto">
       <Head>

@@ -1,7 +1,7 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 
-export default function TafsirModal({surah, display}) {
-  const {number, numberOfVerses, name, revelation, tafsir} = surah
+export default function TafsirModal({ surah, display }) {
+  const { number, numberOfVerses, name, revelation, tafsir } = surah
   const [displayTafsir, setDisplayTafsir] = useState(false)
 
   useEffect(() => {

@@ -12,7 +12,7 @@ strong {
 
 @font-face {
   font-family: Mushaf;
-  src: url("/fonts/mushaf.ttf");
+  src: url('/fonts/mushaf.ttf');
 }
 
 .font-mushaf {

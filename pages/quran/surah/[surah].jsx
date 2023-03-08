@@ -1,12 +1,12 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { create } from "zustand";
-import ErrorCard from "../../../components/ErrorCards";
-import Layout from "../../../components/Layouts";
-import Loading from "../../../components/Loading";
-import VerseCard from "../../../components/quran/VerseCard";
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { create } from 'zustand'
+import ErrorCard from '../../../components/ErrorCards'
+import Layout from '../../../components/Layouts'
+import Loading from '../../../components/Loading'
+import VerseCard from '../../../components/quran/VerseCard'
 
-const surahEnpoint = "https://api.quran.gading.dev/surah/";
+const surahEnpoint = 'https://api.quran.gading.dev/surah/'
 
 // States
 const useSurah = create((set) => ({
@@ -24,23 +24,23 @@ const useSurah = create((set) => ({
 
   // Mendapatkan data surah
   getSurah: async (number) => {
-    set({ loading: true });
+    set({ loading: true })
     await fetch(surahEnpoint + number)
       .then((res) => res.json())
       .then(({ data }) => {
-        console.log("Berhasil memuat data");
-        set({ surah: data });
+        console.log('Berhasil memuat data')
+        set({ surah: data })
       })
       .catch(() => {
-        console.log("Gagal memuat data");
-        set({ error: true });
-      });
-    set({ loading: false });
+        console.log('Gagal memuat data')
+        set({ error: true })
+      })
+    set({ loading: false })
   },
-}));
+}))
 
 export default function Surah({ data }) {
-  const router = useRouter();
+  const router = useRouter()
 
   const {
     surah,
@@ -52,28 +52,28 @@ export default function Surah({ data }) {
     displayTranslate,
     setState,
     getSurah,
-  } = useSurah();
+  } = useSurah()
 
   const goToVerse = () => {
-    const a = document.createElement("a");
-    a.href = window.location.hash;
-    a.click();
-  };
+    const a = document.createElement('a')
+    a.href = window.location.hash
+    a.click()
+  }
 
   // On page loaded
   useEffect(() => {
-    setState({ surah: data });
+    setState({ surah: data })
 
     // Go to the verse
-    if (window.location.hash) goToVerse();
-  }, []);
+    if (window.location.hash) goToVerse()
+  }, [])
 
   // Mengganti surah
   const changeSurah = (number) => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    router.push("/quran/surah/" + number);
-    getSurah(number);
-  };
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    router.push('/quran/surah/' + number)
+    getSurah(number)
+  }
 
   return (
     <Layout
@@ -93,7 +93,7 @@ export default function Surah({ data }) {
               <span className="font-mushaf">{surah.name.short}</span>
             </h1>
             <h2 className="text-xl font-bold text-rose-500">
-              {surah.name.transliteration.id}{" "}
+              {surah.name.transliteration.id}{' '}
             </h2>
             <h3 className="text-lg font-semibold">
               {surah.name.translation.id}
@@ -105,10 +105,10 @@ export default function Surah({ data }) {
             {/* Tafsir button */}
             <div
               className={`cursor-pointer duration-300 hover:text-rose-500 ${
-                displayTafsir ? "text-rose-500" : "text-slate-500 "
+                displayTafsir ? 'text-rose-500' : 'text-slate-500 '
               }`}
               onClick={() => {
-                setState({ displayTafsir: !displayTafsir });
+                setState({ displayTafsir: !displayTafsir })
               }}
               title="Klik untuk menampilkan tafsir surah ini."
             >
@@ -134,10 +134,10 @@ export default function Surah({ data }) {
             {/* Translate button */}
             <div
               className={`cursor-pointer duration-300 hover:text-rose-500 ${
-                displayTranslate ? "text-rose-500" : "text-slate-500 "
+                displayTranslate ? 'text-rose-500' : 'text-slate-500 '
               }`}
               onClick={() => {
-                setState({ displayTranslate: !displayTranslate });
+                setState({ displayTranslate: !displayTranslate })
               }}
               title="Klik untuk menampilkan terjemahan masing-masing ayat."
             >
@@ -154,17 +154,17 @@ export default function Surah({ data }) {
                   strokeLinejoin="round"
                   d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
                 />
-              </svg>{" "}
+              </svg>{' '}
               Terjemahan
             </div>
 
             {/* Audio button */}
             <div
               className={`cursor-pointer duration-300 hover:text-rose-500 ${
-                displayAudio ? "text-rose-500" : "text-slate-500 "
+                displayAudio ? 'text-rose-500' : 'text-slate-500 '
               }`}
               onClick={() => {
-                setState({ displayAudio: !displayAudio });
+                setState({ displayAudio: !displayAudio })
               }}
               title="Klik untuk menampilkan audio masing-masing ayat."
             >
@@ -181,17 +181,17 @@ export default function Surah({ data }) {
                   strokeLinejoin="round"
                   d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
                 />
-              </svg>{" "}
+              </svg>{' '}
               Audio
             </div>
 
             {/* Latin button */}
             <div
               className={`cursor-pointer duration-300 hover:text-rose-500 ${
-                displayLatin ? "text-rose-500" : "text-slate-500 "
+                displayLatin ? 'text-rose-500' : 'text-slate-500 '
               }`}
               onClick={() => {
-                setState({ displayLatin: !displayLatin });
+                setState({ displayLatin: !displayLatin })
               }}
               title="Klik untuk menampilkan bacaan latin masing-masing ayat."
             >
@@ -208,7 +208,7 @@ export default function Surah({ data }) {
                   strokeLinejoin="round"
                   d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
                 />
-              </svg>{" "}
+              </svg>{' '}
               Latin
             </div>
           </div>
@@ -233,7 +233,7 @@ export default function Surah({ data }) {
                       d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
                       clipRule="evenodd"
                     />
-                  </svg>{" "}
+                  </svg>{' '}
                   Sebelumnya
                 </button>
               )}
@@ -245,7 +245,7 @@ export default function Surah({ data }) {
                 title="Beralih ke surah selanjutnya."
                 onClick={() => changeSurah(surah.number + 1)}
               >
-                Selanjutnya{" "}
+                Selanjutnya{' '}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 inline-block ml-1"
@@ -301,7 +301,7 @@ export default function Surah({ data }) {
                       d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
                       clipRule="evenodd"
                     />
-                  </svg>{" "}
+                  </svg>{' '}
                   Sebelumnya
                 </button>
               )}
@@ -313,7 +313,7 @@ export default function Surah({ data }) {
                 title="Beralih ke surah selanjutnya."
                 onClick={() => changeSurah(surah.number + 1)}
               >
-                Selanjutnya{" "}
+                Selanjutnya{' '}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 inline-block ml-1"
@@ -338,7 +338,7 @@ export default function Surah({ data }) {
           {/* Tafsir */}
           <div
             className={`fixed inset-0 z-10 flex justify-center p-4 bg-slate-700/20 backdrop-blur duration-300 overflow-y-auto ${
-              displayTafsir ? "visible opacity-100" : "invisible opacity-0"
+              displayTafsir ? 'visible opacity-100' : 'invisible opacity-0'
             }`}
           >
             <div>
@@ -388,8 +388,8 @@ export default function Surah({ data }) {
               <div className="p-3 rounded-b-lg bg-white">
                 <p className="mb-3">
                   <strong>
-                    Qur'an surah ke-{surah.number}, terdiri dari{" "}
-                    {surah.numberOfVerses} ayat dan termasuk surah{" "}
+                    Qur'an surah ke-{surah.number}, terdiri dari{' '}
+                    {surah.numberOfVerses} ayat dan termasuk surah{' '}
                     {surah.revelation.id}.
                   </strong>
                 </p>
@@ -402,24 +402,24 @@ export default function Surah({ data }) {
 
       {}
     </Layout>
-  );
+  )
 }
 
 /** @type {import("next").GetServerSideProps} */
 export async function getServerSideProps({ params }) {
-  const surahNumber = Number(params.surah);
+  const surahNumber = Number(params.surah)
 
   // Handel surah number
-  if (surahNumber < 1 || surahNumber > 114) return { notFound: true };
+  if (surahNumber < 1 || surahNumber > 114) return { notFound: true }
 
   // Mendapatkan data surah
   const data = await fetch(surahEnpoint + surahNumber)
     .then((res) => res.json())
-    .then(({ data }) => data);
+    .then(({ data }) => data)
 
   return {
     props: {
       data,
     },
-  };
+  }
 }

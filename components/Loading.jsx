@@ -1,4 +1,4 @@
-export default function Loading({message}) {
+export default function Loading({ message }) {
   return (
     <div className="text-center flex justify-center items-center p-2">
       <svg

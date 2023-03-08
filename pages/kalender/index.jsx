@@ -1,9 +1,9 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import ErrorCard from '../../components/ErrorCards'
 import Layout from '../../components/Layouts'
 import Loading from '../../components/Loading'
-import {coords} from '../../constants/location'
-import {indonesianDate} from '../../utils/jadwal-sholat'
+import { coords } from '../../constants/location'
+import { indonesianDate } from '../../utils/jadwal-sholat'
 
 export default function Kalender() {
   const [coordinates, setCoordinates] = useState({
@@ -24,7 +24,7 @@ export default function Kalender() {
       setLocal(!local)
 
       if (local) {
-        const {lat, lng} = JSON.parse(localStorage.getItem('coords'))
+        const { lat, lng } = JSON.parse(localStorage.getItem('coords'))
         setCoordinates({
           latitude: lat,
           longitude: lng,
@@ -43,7 +43,7 @@ export default function Kalender() {
     setLoading(true)
     fetch(`https://api.aladhan.com/v1/calendar?${query}`)
       .then((res) => res.json())
-      .then(({data}) => {
+      .then(({ data }) => {
         setCalendar(data)
         setLoading(false)
       })
@@ -85,7 +85,7 @@ export default function Kalender() {
               </tr>
             </thead>
             <tbody>
-              {calendar.map(({timings, date}, i) => (
+              {calendar.map(({ timings, date }, i) => (
                 <tr
                   key={i}
                   className={`font-semibold whitespace-nowrap ${

@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import {useState} from 'react'
+import { useState } from 'react'
 
-export default function SurahCard({surah}) {
-  const {number, numberOfVerses, name, revelation, tafsir} = surah
+export default function SurahCard({ surah }) {
+  const { number, numberOfVerses, name, revelation, tafsir } = surah
   const [displayTafsir, setDisplayTafsir] = useState(false)
 
   return (

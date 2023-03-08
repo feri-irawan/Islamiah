@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import {useRouter} from 'next/router'
-import {useEffect, useState} from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 const navs = [
   {
@@ -91,12 +91,12 @@ export default function BottomNavigation() {
   const firstPath = '/' + router.asPath.split('/')[1]
 
   useEffect(() => {
-    setActive(navs.find(({url}) => url === firstPath).url)
+    setActive(navs.find(({ url }) => url === firstPath).url)
   }, [])
 
   return (
     <div className="fixed bottom-0 inset-x-0 bg-rose-500 text-white grid grid-cols-4 text-center">
-      {navs.map(({name, icon, url}, i) => (
+      {navs.map(({ name, icon, url }, i) => (
         <Link href={url} key={i}>
           <a className={url === active ? 'pt-2 pb-1 bg-rose-600' : 'pt-2 pb-1'}>
             {icon}
