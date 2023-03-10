@@ -1,27 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import ErrorCard from '../../components/ErrorCards'
 import Layout from '../../components/Layouts'
 import Loading from '../../components/Loading'
 import LastReadCard from '../../components/quran/LastReadCard'
 import SurahCard from '../../components/quran/SurahCard'
+import { useQuranListSurah } from '../../utils/quran'
 
 export default function Quran() {
-  const [listSurah, setListSurah] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const { listSurah, loading, error, getListSurah } = useQuranListSurah()
 
   useEffect(() => {
-    setLoading(true)
-    fetch('https://api.quran.gading.dev/surah')
-      .then((res) => res.json())
-      .then(({ data }) => {
-        setListSurah(data)
-        setLoading(false)
-      })
-      .catch(() => {
-        setLoading(false)
-        setError(true)
-      })
+    getListSurah()
   }, [])
 
   return (
@@ -45,5 +34,3 @@ export default function Quran() {
     </Layout>
   )
 }
-
-// export async function getStaticProps(params) {}

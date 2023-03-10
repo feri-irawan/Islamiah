@@ -1,58 +1,28 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { create } from 'zustand'
 import ErrorCard from '../../../components/ErrorCards'
 import Layout from '../../../components/Layouts'
 import Loading from '../../../components/Loading'
 import VerseCard from '../../../components/quran/VerseCard'
-
-const surahEnpoint = 'https://api.quran.gading.dev/surah/'
-
-// States
-const useSurah = create((set) => ({
-  // Initial states
-  surah: null,
-  loading: false,
-  error: false,
-  displayTafsir: false,
-  displayLatin: false,
-  displayAudio: false,
-  displayTranslate: false,
-
-  // Set states
-  setState: (newState) => set((states) => ({ ...states, ...newState })),
-
-  // Mendapatkan data surah
-  getSurah: async (number) => {
-    set({ loading: true })
-    await fetch(surahEnpoint + number)
-      .then((res) => res.json())
-      .then(({ data }) => {
-        console.log('Berhasil memuat data')
-        set({ surah: data })
-      })
-      .catch(() => {
-        console.log('Gagal memuat data')
-        set({ error: true })
-      })
-    set({ loading: false })
-  },
-}))
+import {
+  surahEndpoint,
+  useQuranSurah,
+  useQuranSurahOption,
+} from '../../../utils/quran'
 
 export default function Surah({ data }) {
   const router = useRouter()
 
   const {
-    surah,
+    currentSurah: surah,
     loading,
     error,
-    displayTafsir,
-    displayLatin,
-    displayAudio,
-    displayTranslate,
-    setState,
     getSurah,
-  } = useSurah()
+    setSurah,
+  } = useQuranSurah()
+
+  const { displayTafsir, displayLatin, displayAudio, displayTranslate } =
+    useQuranSurahOption()
 
   const goToVerse = () => {
     const a = document.createElement('a')
@@ -62,7 +32,7 @@ export default function Surah({ data }) {
 
   // On page loaded
   useEffect(() => {
-    setState({ surah: data })
+    setSurah(data)
 
     // Go to the verse
     if (window.location.hash) goToVerse()
@@ -415,7 +385,7 @@ export async function getServerSideProps({ params }) {
   if (surahNumber < 1 || surahNumber > 114) return { notFound: true }
 
   // Mendapatkan data surah
-  const data = await fetch(surahEnpoint + surahNumber)
+  const data = await fetch(surahEndpoint + surahNumber)
     .then((res) => res.json())
     .then(({ data }) => data)
 
