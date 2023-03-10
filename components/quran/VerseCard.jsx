@@ -1,7 +1,15 @@
 import copy from 'copy-to-clipboard'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useQuranLastRead } from '../../utils/quran'
+import ClipboardCheckFill from '../icons/ClipboardCheckFill'
+import ClipboardIcon from '../icons/ClipboardIcon'
+import PinAngleIcon from '../icons/PinAngleIcon'
+import PinFill from '../icons/PinFill'
 
 export default function VerseCard({ verse, options }) {
+  const { lastRead, setLastRead } = useQuranLastRead()
+  const [displayMenu, setDisplayMenu] = useState(false)
+  const [verseLink, setVerseLink] = useState(null)
   const [copied, setCopied] = useState(false)
 
   const { number, text, translation, audio } = verse
@@ -10,10 +18,15 @@ export default function VerseCard({ verse, options }) {
   // Jika tafsir masing masing ayat ingin ditambahkan
   // const [displayTafsirVerse, setDisplayTafsirVerse] = useState(false)
 
-  const copyVerseLink = () => {
-    const copied = copy(
+  useEffect(() => {
+    setVerseLink(
       window.location.origin + window.location.pathname + '#' + number.inSurah
     )
+  }, [])
+
+  // Copy verse link
+  const copyVerseLink = (link) => {
+    const copied = copy(link)
 
     if (copied) setCopied(true)
 
@@ -21,26 +34,17 @@ export default function VerseCard({ verse, options }) {
   }
 
   return (
-    <div id={number.inSurah} className="mb-4 -mt-16 pt-16">
-      <div
-        onDoubleClick={copyVerseLink}
-        className={`flex ${
-          copied && 'ring ring-offset-4 ring-rose-200 rounded'
-        }`}
-      >
+    <div
+      id={number.inSurah}
+      className={options?.offsetOn && 'mb-4 -mt-16 pt-16'}
+    >
+      <div onDoubleClick={() => setDisplayMenu(!displayMenu)} className="flex">
         <div className="verse-number font-bold text-rose-500 mr-3">
           <div className="sticky top-14 bg-rose-200 px-3 py-1.5 rounded-full">
             {number.inSurah}
           </div>
         </div>
         <div className="w-full">
-          {/* Copy alert */}
-          {copied && (
-            <div className="px-4 my-2 bg-rose-200 text-center rounded">
-              Link ayat {number.inSurah} berhasil disalin.
-            </div>
-          )}
-
           {/* Arab */}
           <p className="text-right font-serif text-2xl">
             <span className="font-mushaf leading-loose">{text.arab}</span>
@@ -73,6 +77,45 @@ export default function VerseCard({ verse, options }) {
           {/* Tafsir masing-masing ayat */}
           {/* {displayTafsirVerse && <p className="mt-3">{tafsir.id.short}</p>} */}
           {/* {displayTafsirVerse && <p className="mt-3">{tafsir.id.long}</p>} */}
+        </div>
+      </div>
+
+      {/* Options */}
+      <div
+        className={`overflow-hidden duration-300 ${
+          displayMenu ? 'h-[1.5rem]' : 'h-0'
+        }`}
+      >
+        <div className="flex gap-4 px-3 justify-between">
+          {/* Copy link button */}
+          <div
+            title="Salin link ayat"
+            className="flex items-center gap-2 cursor-pointer hover:text-rose-500 duration-300"
+            onClick={() => copyVerseLink(verseLink)}
+          >
+            {!copied ? <ClipboardIcon /> : <ClipboardCheckFill />}
+            <span>{!copied ? 'Salin link' : 'Tersalin!'}</span>
+          </div>
+
+          {/* Last read button */}
+          {options?.showLastReadButton && (
+            <div
+              title="Tandai terakhir dibaca"
+              className="flex items-center gap-2 cursor-pointer hover:text-rose-500 duration-300"
+              onClick={() => setLastRead({ ...verse, link: verseLink })}
+            >
+              {lastRead?.number.inQuran !== number.inQuran ? (
+                <PinAngleIcon />
+              ) : (
+                <PinFill />
+              )}
+              <span>
+                {lastRead?.number.inQuran !== number.inQuran
+                  ? 'Terakhir dibaca'
+                  : 'Ditandai terakhir'}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

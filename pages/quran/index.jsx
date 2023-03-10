@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import ErrorCard from '../../components/ErrorCards'
 import Layout from '../../components/Layouts'
 import Loading from '../../components/Loading'
+import LastReadCard from '../../components/quran/LastReadCard'
 import SurahCard from '../../components/quran/SurahCard'
 
 export default function Quran() {
@@ -26,6 +27,8 @@ export default function Quran() {
   return (
     <Layout name="Qur'an">
       <h1 className="text-3xl font-bold text-rose-500 mb-3">Qur'an</h1>
+
+      <LastReadCard />
 
       {loading && <Loading message="Memuat semua surah..." />}
       {error && (

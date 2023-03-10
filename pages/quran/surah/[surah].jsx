@@ -276,6 +276,8 @@ export default function Surah({ data }) {
                 displayLatin,
                 displayTranslate,
                 displayAudio,
+                showLastReadButton: true,
+                offsetOn: true,
               }}
               verse={verse}
             />
