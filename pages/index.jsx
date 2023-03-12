@@ -54,44 +54,48 @@ export default function JadwalSolatHariIni() {
   }, [today, coordinates])
 
   // Mengatur waktu tanggal, jam, hari ini.
-  setInterval(() => {
-    setTanggal(indonesianDate())
-    setJam(indonesianDate(true))
+  useEffect(() => {
+    const tId = setTimeout(() => {
+      setTanggal(indonesianDate())
+      setJam(indonesianDate(true))
 
-    // Sholat berikutnya.
-    if (jadwalSholat) {
-      if (jadwalSholat.timings) {
-        // Mengambil sholat yang waktunya sudah paling dekat
-        const times = Object.values(jadwalSholat.timings)
-          .map((v) => new Date(`${yyyy}-${mm}-${dd}T${v}`).getTime())
-          .map((v, i) => [Object.keys(jadwalSholat.timings)[i], v - Date.now()])
-          .sort((a, b) => a[1] - b[1])
-          .filter((v) => v[1] > 0)
+      // Sholat berikutnya.
+      if (jadwalSholat) {
+        if (jadwalSholat.timings) {
+          // Mengambil sholat yang waktunya sudah paling dekat
+          const times = Object.values(jadwalSholat.timings)
+            .map((v) => new Date(`${yyyy}-${mm}-${dd}T${v}`).getTime())
+            .map((v, i) => [Object.keys(jadwalSholat.timings)[i], v - Date.now()])
+            .sort((a, b) => a[1] - b[1])
+            .filter((v) => v[1] > 0)
 
-        // Memperbarui tanggal jika jadwal hari ini sudah selesai
-        if (times.length === 0) {
-          setToday(Number(dd) + 1)
-          setTanggal(indonesianDate(false, `${yyyy}-${mm}-${today}`))
+          // Memperbarui tanggal jika jadwal hari ini sudah selesai
+          if (times.length === 0) {
+            setToday(Number(dd) + 1)
+            setTanggal(indonesianDate(false, `${yyyy}-${mm}-${today}`))
+          }
+
+          // Mengatur countdown
+          const distance = times[0][1]
+          const hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          )
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000)
+
+          // Memperbarui info sholat berikutnya
+          setNext({
+            name: times[0][0],
+            countDown: `${(hours < 10 ? '0' : '') + hours}:${
+              (minutes < 10 ? '0' : '') + minutes
+            }:${(seconds < 10 ? '0' : '') + seconds}`,
+          })
         }
-
-        // Mengatur countdown
-        const distance = times[0][1]
-        const hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        )
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000)
-
-        // Memperbarui info sholat berikutnya
-        setNext({
-          name: times[0][0],
-          countDown: `${(hours < 10 ? '0' : '') + hours}:${
-            (minutes < 10 ? '0' : '') + minutes
-          }:${(seconds < 10 ? '0' : '') + seconds}`,
-        })
       }
-    }
-  }, 1000)
+    }, 1000)
+
+    return () => clearTimeout(tId)
+  })
 
   // Memutar audio adzan
   useEffect(() => {
