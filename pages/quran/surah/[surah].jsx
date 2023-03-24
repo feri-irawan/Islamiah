@@ -78,7 +78,7 @@ export default function Surah({ data }) {
                 displayTafsir ? 'text-rose-500' : 'text-slate-500 '
               }`}
               onClick={() => {
-                setState({ displayTafsir: !displayTafsir })
+                useQuranSurahOption.setState({ displayTafsir: !displayTafsir })
               }}
               title="Klik untuk menampilkan tafsir surah ini."
             >
@@ -90,7 +90,7 @@ export default function Surah({ data }) {
                 stroke="currentColor"
                 strokeWidth="2"
                 title="Lihat Tafsir"
-                onClick={() => setState({ displayTafsir: true })}
+                onClick={() => useQuranSurahOption.setState({ displayTafsir: true })}
               >
                 <path
                   strokeLinecap="round"
@@ -107,7 +107,7 @@ export default function Surah({ data }) {
                 displayTranslate ? 'text-rose-500' : 'text-slate-500 '
               }`}
               onClick={() => {
-                setState({ displayTranslate: !displayTranslate })
+                useQuranSurahOption.setState({ displayTranslate: !displayTranslate })
               }}
               title="Klik untuk menampilkan terjemahan masing-masing ayat."
             >
@@ -134,7 +134,7 @@ export default function Surah({ data }) {
                 displayAudio ? 'text-rose-500' : 'text-slate-500 '
               }`}
               onClick={() => {
-                setState({ displayAudio: !displayAudio })
+                useQuranSurahOption.setState({ displayAudio: !displayAudio })
               }}
               title="Klik untuk menampilkan audio masing-masing ayat."
             >
@@ -161,7 +161,7 @@ export default function Surah({ data }) {
                 displayLatin ? 'text-rose-500' : 'text-slate-500 '
               }`}
               onClick={() => {
-                setState({ displayLatin: !displayLatin })
+                useQuranSurahOption.setState({ displayLatin: !displayLatin })
               }}
               title="Klik untuk menampilkan bacaan latin masing-masing ayat."
             >
@@ -324,7 +324,7 @@ export default function Surah({ data }) {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     strokeWidth="2"
-                    onClick={() => setState({ displayTafsir: false })}
+                    onClick={() => useQuranSurahOption.setState({ displayTafsir: false })}
                   >
                     <path
                       strokeLinecap="round"
