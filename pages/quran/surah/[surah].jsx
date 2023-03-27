@@ -21,8 +21,13 @@ export default function Surah({ data }) {
     setSurah,
   } = useQuranSurah()
 
-  const { displayTafsir, displayLatin, displayAudio, displayTranslate } =
-    useQuranSurahOption()
+  const {
+    displayTafsir,
+    displayLatin,
+    displayAudio,
+    displayTranslate,
+    setOption,
+  } = useQuranSurahOption()
 
   const goToVerse = () => {
     const a = document.createElement('a')
@@ -77,9 +82,7 @@ export default function Surah({ data }) {
               className={`cursor-pointer duration-300 hover:text-rose-500 ${
                 displayTafsir ? 'text-rose-500' : 'text-slate-500 '
               }`}
-              onClick={() => {
-                setState({ displayTafsir: !displayTafsir })
-              }}
+              onClick={() => setOption({ displayTafsir: !displayTafsir })}
               title="Klik untuk menampilkan tafsir surah ini."
             >
               <svg
@@ -89,8 +92,6 @@ export default function Surah({ data }) {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth="2"
-                title="Lihat Tafsir"
-                onClick={() => setState({ displayTafsir: true })}
               >
                 <path
                   strokeLinecap="round"
@@ -106,9 +107,7 @@ export default function Surah({ data }) {
               className={`cursor-pointer duration-300 hover:text-rose-500 ${
                 displayTranslate ? 'text-rose-500' : 'text-slate-500 '
               }`}
-              onClick={() => {
-                setState({ displayTranslate: !displayTranslate })
-              }}
+              onClick={() => setOption({ displayTranslate: !displayTranslate })}
               title="Klik untuk menampilkan terjemahan masing-masing ayat."
             >
               <svg
@@ -133,9 +132,7 @@ export default function Surah({ data }) {
               className={`cursor-pointer duration-300 hover:text-rose-500 ${
                 displayAudio ? 'text-rose-500' : 'text-slate-500 '
               }`}
-              onClick={() => {
-                setState({ displayAudio: !displayAudio })
-              }}
+              onClick={() => setOption({ displayAudio: !displayAudio })}
               title="Klik untuk menampilkan audio masing-masing ayat."
             >
               <svg
@@ -160,9 +157,7 @@ export default function Surah({ data }) {
               className={`cursor-pointer duration-300 hover:text-rose-500 ${
                 displayLatin ? 'text-rose-500' : 'text-slate-500 '
               }`}
-              onClick={() => {
-                setState({ displayLatin: !displayLatin })
-              }}
+              onClick={() => setOption({ displayLatin: !displayLatin })}
               title="Klik untuk menampilkan bacaan latin masing-masing ayat."
             >
               <svg
@@ -324,7 +319,7 @@ export default function Surah({ data }) {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     strokeWidth="2"
-                    onClick={() => setState({ displayTafsir: false })}
+                    onClick={() => setOption({ displayTafsir: false })}
                   >
                     <path
                       strokeLinecap="round"
