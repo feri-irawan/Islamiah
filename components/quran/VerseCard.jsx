@@ -33,6 +33,31 @@ export default function VerseCard({ verse, options }) {
     setTimeout(() => setCopied(false), 5000)
   }
 
+  // Jika audio di play, pause audio lainnya
+  const onPlay = (e) => {
+    const audios = document.querySelectorAll('audio')
+    audios.forEach((audio) => {
+      if (audio.src !== e.target.src) {
+        audio.pause()
+        audio.currentTime = 0
+      }
+    })
+    e.target.play()
+  }
+
+  // Jika audio sudah selesai, putar audio berikutnya jika masih ada
+  const nextAudio = (e) => {
+    const audios = document.querySelectorAll('audio')
+    const next = audios.item(number.inSurah)
+
+    if (next) {
+      const a = document.createElement('a')
+      a.href = window.location.pathname + '#' + (number.inSurah + 1)
+      a.click()
+      next.play()
+    }
+  }
+
   return (
     <div
       id={number.inSurah}
@@ -69,6 +94,8 @@ export default function VerseCard({ verse, options }) {
                   src={audio.primary}
                   preload="none"
                   controls={true}
+                  onPlay={onPlay}
+                  onEnded={nextAudio}
                 />
               </div>
             )}
