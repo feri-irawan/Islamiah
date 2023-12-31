@@ -1,6 +1,10 @@
+'use client'
+
+import { cn } from '@/utils/cn'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { VerseCardOptions } from './quran/verse-card-options'
 
 const navs = [
   {
@@ -86,26 +90,31 @@ const navs = [
 ]
 
 export default function BottomNavigation() {
-  const router = useRouter()
-  const [active, setActive] = useState(null)
-  const firstPath = '/' + router.asPath.split('/')[1]
+  const pathname = usePathname()
+  const [active, setActive] = useState<string | undefined>()
+  const firstPath = '/' + pathname.split('/')[1]
 
   useEffect(() => {
-    setActive(navs.find(({ url }) => url === firstPath).url)
-  }, [])
+    const result = navs.find(({ url }) => url === firstPath)
+    setActive(result?.url)
+  }, [firstPath])
 
   return (
-    <div className="fixed bottom-0 inset-x-0 bg-rose-500 text-white grid grid-cols-4 text-center">
-      {navs.map(({ name, icon, url }, i) => (
-        <Link
-          href={url}
-          key={i}
-          className={url === active ? 'pt-2 pb-1 bg-rose-600' : 'pt-2 pb-1'}
-        >
-          {icon}
-          <span className="text-sm">{name}</span>
-        </Link>
-      ))}
+    <div className="fixed bottom-0 inset-x-0">
+      {firstPath === '/quran' && <VerseCardOptions />}
+
+      <div className="bg-primary text-white grid grid-cols-4 text-center">
+        {navs.map(({ name, icon, url }) => (
+          <Link
+            href={url}
+            key={url}
+            className={cn('pt-2 pb-1', url === active && 'bg-primary-600')}
+          >
+            {icon}
+            <span className="text-sm">{name}</span>
+          </Link>
+        ))}
+      </div>
     </div>
   )
 }

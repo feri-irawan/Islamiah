@@ -36,11 +36,7 @@ strong {
 }
 
 .verse-number {
-  filter: drop-shadow(0px 0px 1px rgb(251 113 133));
-}
-.verse-number > * {
-  @apply py-2 text-center w-10 bg-rose-200;
-  white-space: nowrap;
+  @apply flex items-center justify-center h-10 w-10 bg-primary-100 text-primary-500 whitespace-nowrap;
   clip-path: polygon(
     50% 0,
     65% 15%,

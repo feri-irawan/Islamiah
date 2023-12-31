@@ -1,11 +1,13 @@
+'use client'
+
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useQuranLastRead } from '../../utils/quran'
-import VerseCard from './VerseCard'
+import VerseCard from './old-verse-card'
 
 export default function LastReadCard() {
   const { lastRead } = useQuranLastRead()
-  const [loaded, setLoaded] = useState()
+  const [loaded, setLoaded] = useState(false)
 
   // Mengatasi hydration
   useEffect(() => {

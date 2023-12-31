@@ -1,31 +1,58 @@
+'use client'
+
+import { Verse } from '@/actions/surah'
 import copy from 'copy-to-clipboard'
 import { useEffect, useState } from 'react'
+import { create } from 'zustand'
 import { useQuranLastRead } from '../../utils/quran'
 import ClipboardCheckFill from '../icons/ClipboardCheckFill'
 import ClipboardIcon from '../icons/ClipboardIcon'
 import PinAngleIcon from '../icons/PinAngleIcon'
 import PinFill from '../icons/PinFill'
 
-export default function VerseCard({ verse, options }) {
+type VerseCardOptions = {
+  offsetOn?: boolean
+  showLatin?: boolean
+  showAudio?: boolean
+  showTranslation?: boolean
+  showLastReadButton?: boolean
+  setOptions: (options: VerseCardOptions) => void
+}
+
+type VerseCardProps = {
+  verse: Verse
+}
+
+export const useVerseCardOptions = create<VerseCardOptions>((set) => ({
+  setOptions: (options) => set({ ...options }),
+}))
+
+export default function VerseCard({ verse }: VerseCardProps) {
   const { lastRead, setLastRead } = useQuranLastRead()
   const [displayMenu, setDisplayMenu] = useState(false)
-  const [verseLink, setVerseLink] = useState(null)
+  const [verseLink, setVerseLink] = useState('')
   const [copied, setCopied] = useState(false)
 
   const { number, text, translation, audio } = verse
-  const { displayLatin, displayAudio, displayTranslate } = options
+  const {
+    showLatin,
+    showAudio,
+    showTranslation,
+    offsetOn,
+    showLastReadButton,
+  } = useVerseCardOptions()
 
   // Jika tafsir masing masing ayat ingin ditambahkan
   // const [displayTafsirVerse, setDisplayTafsirVerse] = useState(false)
 
   useEffect(() => {
     setVerseLink(
-      window.location.origin + window.location.pathname + '#' + number.inSurah
+      window.location.origin + window.location.pathname + '#' + number.inSurah,
     )
   }, [])
 
   // Copy verse link
-  const copyVerseLink = (link) => {
+  const copyVerseLink = (link: string) => {
     const copied = copy(link)
 
     if (copied) setCopied(true)
@@ -34,19 +61,19 @@ export default function VerseCard({ verse, options }) {
   }
 
   // Jika audio di play, pause audio lainnya
-  const onPlay = (e) => {
+  const onPlay = (e: React.SyntheticEvent<HTMLAudioElement>) => {
     const audios = document.querySelectorAll('audio')
     audios.forEach((audio) => {
-      if (audio.src !== e.target.src) {
+      if (audio.src !== e.currentTarget.src) {
         audio.pause()
         audio.currentTime = 0
       }
     })
-    e.target.play()
+    e.currentTarget.play()
   }
 
   // Jika audio sudah selesai, putar audio berikutnya jika masih ada
-  const nextAudio = (e) => {
+  const nextAudio = () => {
     const audios = document.querySelectorAll('audio')
     const next = audios.item(number.inSurah)
 
@@ -60,8 +87,8 @@ export default function VerseCard({ verse, options }) {
 
   return (
     <div
-      id={number.inSurah}
-      className={options?.offsetOn && 'mb-4 -mt-16 pt-16'}
+      id={number.inSurah.toString()}
+      className={offsetOn ? 'mb-4 -mt-16 pt-16' : ''}
     >
       <div onDoubleClick={() => setDisplayMenu(!displayMenu)} className="flex">
         <div className="verse-number font-bold text-rose-500 mr-3">
@@ -76,18 +103,18 @@ export default function VerseCard({ verse, options }) {
           </p>
 
           {/* Latin */}
-          {displayLatin && (
+          {showLatin && (
             <em className="text-rose-700/50 block mt-3">
               {text.transliteration.en}
             </em>
           )}
 
           {/* Translate */}
-          {displayTranslate && <p className="block mt-2">{translation.id}</p>}
+          {showTranslation && <p className="block mt-2">{translation.id}</p>}
 
           <div className="mt-3 flex flex-wrap items-center">
             {/* Audio */}
-            {displayAudio && (
+            {showAudio && (
               <div className="overflow-hidden flex justify-center items-center h-5 mr-3 w-full">
                 <audio
                   className="w-full"
@@ -125,7 +152,7 @@ export default function VerseCard({ verse, options }) {
           </div>
 
           {/* Last read button */}
-          {options?.showLastReadButton && (
+          {showLastReadButton && (
             <div
               title="Tandai terakhir dibaca"
               className="flex items-center gap-2 cursor-pointer hover:text-rose-500 duration-300"
