@@ -101,9 +101,9 @@ export default function BottomNavigation() {
 
   return (
     <div className="fixed bottom-0 inset-x-0">
-      {firstPath === '/quran' && <VerseCardOptions />}
+      {pathname.includes('/quran/') && <VerseCardOptions />}
 
-      <div className="bg-primary text-white grid grid-cols-4 text-center">
+      <div className="bg-primary rounded-t-lg text-white grid grid-cols-4 text-center">
         {navs.map(({ name, icon, url }) => (
           <Link
             href={url}

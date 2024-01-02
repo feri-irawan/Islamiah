@@ -64,3 +64,9 @@ audio::-webkit-media-controls-current-time-display,
 audio::-webkit-media-controls-time-remaining-display {
   @apply text-rose-500;
 }
+
+@layer components {
+  .offset-t-4 {
+    @apply -mt-4 pt-4;
+  }
+}

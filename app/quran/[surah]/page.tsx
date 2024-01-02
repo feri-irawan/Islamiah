@@ -47,9 +47,10 @@ export default async function Surah({ params }: { params: { surah: string } }) {
         </h2>
         <h3>{surah.name.translation.id}</h3>
       </header>
-      <div className="grid gap-4">
+
+      <div className="grid p-4 gap-4">
         {surah.verses.map((verse) => (
-          <VerseCard key={verse.number.inSurah} {...verse} />
+          <VerseCard key={verse.number.inSurah} surah={surah} verse={verse} />
         ))}
       </div>
     </section>

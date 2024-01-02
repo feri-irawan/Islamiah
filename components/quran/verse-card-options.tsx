@@ -17,6 +17,8 @@ type UseverseCardOptions = Options & {
 export const useVerseCardOptions = create(
   persist<UseverseCardOptions>(
     (set) => ({
+      showAudio: true,
+      showTranslation: true,
       setOptions: (options) => set({ ...options }),
     }),
     { name: 'verse-card-options' },
