@@ -38,7 +38,8 @@ export function VerseCardOptions() {
         )}
         onClick={() => setOptions({ showLatin: !showLatin })}
       >
-        <LanguagesIcon className="w-4" /> Latin
+        <LanguagesIcon className="w-4" />
+        <span className="hidden sm:inline">Latin</span>
       </button>
       <button
         className={cn(
@@ -47,7 +48,8 @@ export function VerseCardOptions() {
         )}
         onClick={() => setOptions({ showAudio: !showAudio })}
       >
-        <Volume2Icon className="w-4" /> Audio
+        <Volume2Icon className="w-4" />
+        <span className="hidden sm:inline">Audio</span>
       </button>
       <button
         className={cn(
@@ -56,7 +58,8 @@ export function VerseCardOptions() {
         )}
         onClick={() => setOptions({ showTranslation: !showTranslation })}
       >
-        <LanguagesIcon className="w-4" /> Terjemah
+        <LanguagesIcon className="w-4" />
+        <span className="hidden sm:inline">Terjemah</span>
       </button>
       <button
         className={cn(
@@ -65,7 +68,8 @@ export function VerseCardOptions() {
         )}
         onClick={() => setOptions({ showTafsir: !showTafsir })}
       >
-        <InfoIcon className="w-4" /> Tafsir
+        <InfoIcon className="w-4" />
+        <span className="hidden sm:inline">Tafsir</span>
       </button>
     </div>
   )
