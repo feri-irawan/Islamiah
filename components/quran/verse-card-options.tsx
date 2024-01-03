@@ -30,7 +30,7 @@ export function VerseCardOptions() {
     useVerseCardOptions()
 
   return (
-    <div className="flex p-3 justify-center gap-4 items-center bg-white">
+    <div className="flex p-3 justify-center gap-4 items-center">
       <button
         className={cn(
           'flex gap-2 items-center text-sm',

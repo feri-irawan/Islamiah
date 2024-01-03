@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { VerseCardOptions } from './quran/verse-card-options'
+import SurahActions from './quran/surah-actions'
 
 const navs = [
   {
@@ -101,7 +101,7 @@ export default function BottomNavigation() {
 
   return (
     <div className="fixed bottom-0 inset-x-0">
-      {pathname.includes('/quran/') && <VerseCardOptions />}
+      {pathname.includes('/quran/') && <SurahActions />}
 
       <div className="bg-primary rounded-t-lg text-white grid grid-cols-4 text-center">
         {navs.map(({ name, icon, url }) => (
