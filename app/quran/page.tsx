@@ -1,4 +1,4 @@
-import { SurahList } from '@/components/quran/surah-list'
+import { SurahList, SurahListSkeletons } from '@/components/quran/surah-list'
 import { SurahTafsirModal } from '@/components/quran/surah-tafsir-modal'
 import VerseLastReadCard from '@/components/quran/verse-last-read-card'
 import { Metadata } from 'next'
@@ -15,7 +15,7 @@ export default function Quran() {
       <h1 className="text-3xl font-bold text-primary">Qur'an</h1>
       <VerseLastReadCard />
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<SurahListSkeletons />}>
         <SurahList />
       </Suspense>
 
