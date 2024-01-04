@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { VerseCard } from './verse-card'
+import { VerseCard } from './[surah]/verse-card'
 
 type UseVerseLastRead = {
   verse: Verse | null

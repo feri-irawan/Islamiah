@@ -1,8 +1,8 @@
-import { SurahList, SurahListSkeletons } from '@/components/quran/surah-list'
-import { SurahTafsirModal } from '@/components/quran/surah-tafsir-modal'
-import VerseLastReadCard from '@/components/quran/verse-last-read-card'
 import { Metadata } from 'next'
 import { Suspense } from 'react'
+import { SurahList, SurahListSkeletons } from './surah-list'
+import { SurahTafsirModal } from './surah-tafsir-modal'
+import VerseLastReadCard from './verse-last-read-card'
 
 export const metadata: Metadata = {
   title: 'Qur’an',

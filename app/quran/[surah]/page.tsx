@@ -1,7 +1,7 @@
 import { getSurah } from '@/actions/surah'
-import { VerseCard } from '@/components/quran/verse-card'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { VerseCard } from './verse-card'
 
 type PageProps = {
   params: {

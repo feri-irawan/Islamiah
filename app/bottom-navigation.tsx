@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import SurahActions from './quran/surah-actions'
+import SurahActions from './quran/[surah]/surah-actions'
 
 const navs = [
   {

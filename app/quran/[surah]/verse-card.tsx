@@ -5,8 +5,8 @@ import { cn } from '@/utils/cn'
 import copy from 'copy-to-clipboard'
 import { Check, LinkIcon, Pin } from 'lucide-react'
 import { createContext, useContext, useState } from 'react'
+import { useVerseLastRead } from '../verse-last-read-card'
 import { useVerseCardOptions } from './verse-card-options'
-import { useVerseLastRead } from './verse-last-read-card'
 
 type TVerseContext = {
   verse: Verse | null

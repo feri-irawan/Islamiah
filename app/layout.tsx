@@ -1,9 +1,10 @@
-import BottomNavigation from '@/components/bottom-navigation'
-import Header from '@/components/header'
+import BottomNavigation from '@/app/bottom-navigation'
+import Header from '@/app/header'
 import '@/styles/globals.css'
 import { cn } from '@/utils/cn'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Footer from './footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <Header />
         <main className="pb-[5rem]">{children}</main>
         <BottomNavigation />
+        <Footer />
       </body>
     </html>
   )
