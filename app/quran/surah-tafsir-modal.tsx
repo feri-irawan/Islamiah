@@ -32,7 +32,7 @@ export function SurahTafsirModal() {
     return () => {
       removeEventListener('keydown', onEsc)
     }
-  }, [open])
+  }, [open, toggle])
 
   return (
     <section

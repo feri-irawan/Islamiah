@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function Quran() {
   return (
     <main className="grid gap-4 p-4">
-      <h1 className="text-3xl font-bold text-primary">Qur'an</h1>
+      <h1 className="text-3xl font-bold text-primary">Qur&apos;an</h1>
       <VerseLastReadCard />
 
       <Suspense fallback={<SurahListSkeletons />}>

@@ -1,11 +1,13 @@
+'use client'
+
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
-function getNextAndPreviousSurah() {
+function useGetNextAndPreviousSurah() {
   const { surah } = useParams()
   const currentSurah = parseInt(surah as string)
-  
+
   let nextSurah = currentSurah + 1
   nextSurah = nextSurah > 114 ? 1 : nextSurah
 
@@ -16,7 +18,7 @@ function getNextAndPreviousSurah() {
 }
 
 export function ButtonNextSurah() {
-  const { nextSurah } = getNextAndPreviousSurah()
+  const { nextSurah } = useGetNextAndPreviousSurah()
 
   return (
     <Link
@@ -29,7 +31,7 @@ export function ButtonNextSurah() {
 }
 
 export function ButtonPreviousSurah() {
-  const { previousSurah } = getNextAndPreviousSurah()
+  const { previousSurah } = useGetNextAndPreviousSurah()
 
   return (
     <Link

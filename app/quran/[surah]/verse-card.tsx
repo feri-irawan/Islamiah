@@ -147,10 +147,10 @@ function VerseTafsir() {
   )
 }
 
-function getVersePath() {
+function useGetVersePath() {
   const { verse, surah } = useContext(VerseCardContext)
   if (!verse || !surah)
-    throw new Error('getVersePath must be used within VerseCard')
+    throw new Error('useGetVersePath must be used within VerseCard')
 
   return `/quran/${surah.number}#${verse.number.inSurah}`
 }
@@ -161,7 +161,7 @@ function VerseMarkAsLastRead() {
   if (!surah || !verse)
     throw new Error('VerseMarkAsLastRead must be used within VerseCard')
 
-  const path = getVersePath()
+  const path = useGetVersePath()
 
   const { setVerseLastRead, verse: verseLastRead } = useVerseLastRead()
 
@@ -181,7 +181,7 @@ function VerseMarkAsLastRead() {
 }
 
 function VerseCopyLink() {
-  const path = getVersePath()
+  const path = useGetVersePath()
   const [copied, setCopied] = useState(false)
 
   const onClick = () => {
